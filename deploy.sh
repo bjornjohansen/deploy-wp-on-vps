@@ -360,6 +360,7 @@ wp core install --url=${WP_URL} --title=${WP_SITENAME} --admin_user=${WP_USER} -
 wp option update blogdescription "${WP_SITEDESCRIPTION}"
 echo "y" | wp site empty
 wp plugin uninstall hello
+wp plugin install wp-db-driver --activate
 wp plugin install advanced-custom-fields --activate
 wp plugin install aryo-activity-log --activate
 wp plugin install ewww-image-optimizer --activate
