@@ -380,6 +380,10 @@ wp plugin install wp-crontrol --activate
 wp plugin install wp-cron-control --activate
 wp plugin install https://github.com/kasparsd/minit/archive/master.zip --activate
 wp plugin install https://github.com/bjornjohansen/minit-yui/archive/master.zip --activate
+wp plugin install enforce-strong-password --activate
+wp plugin install google-authenticator --activate
+wp plugin install google-authenticator-encourage-user-activation --activate
+wp plugin install google-authenticator-per-user-prompt --activate
 
 
 # Set up cron
