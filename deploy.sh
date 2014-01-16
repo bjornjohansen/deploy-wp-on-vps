@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo
+
 # Make sure correct Ubuntu version is installed
 DEP_UBUNTU_VERSION="12.04"
 UBUNTU_VERSION=`lsb_release -rs`
@@ -8,10 +10,14 @@ if [ "${DEP_UBUNTU_VERSION}" != "${UBUNTU_VERSION}" ]; then
         exit
 fi
 
+# Make sure we are root
+if [ `whoami` != "root" ]; then
+        echo "You're not root. Go out and play!"
+        exit
+fi
+
 
 # Collect info from user
-
-echo
 
 SYSTEM_ADMIN_EMAIL="teknisk@arachno.no"
 echo -n "System admin email (root) [$SYSTEM_ADMIN_EMAIL]: "
