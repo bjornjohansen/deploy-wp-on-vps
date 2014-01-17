@@ -7,14 +7,38 @@ DEP_UBUNTU_VERSION="12.04"
 UBUNTU_VERSION=`lsb_release -rs`
 if [ "${DEP_UBUNTU_VERSION}" != "${UBUNTU_VERSION}" ]; then
         echo "Deployscript for Ubuntu ${DEP_UBUNTU_VERSION} only. This is ${UBUNTU_VERSION}."
-        exit
+        exit 1
 fi
 
-# Make sure we are root
+# Make sure we (you) are root
 if [ `whoami` != "root" ]; then
         echo "You're not root. Go out and play!"
-        exit
+        exit 1
 fi
+
+# Make sure we have a public key in place
+ROOT_HOMEDIR=`echo ~root`
+AUTH_KEYS_FILE="${ROOT_HOMEDIR}/.ssh/authorized_keys"
+if [ ! -s "${AUTH_KEYS_FILE}" ]; then
+        echo
+        echo "You do not seem to have your public key installed!"
+        echo "Without it, you will be locked out of your server."
+        echo "Please paste your public key or press CTRL+C to abort: "
+        read PUBKEY
+        if [ ! -n "$PUBKEY" ]; then
+                echo "Now, that was disappointing. Go out and play!"
+                exit 1
+        fi
+        if [ ! -e $(dirname ${AUTH_KEYS_FILE}) ]; then
+                mkdir -p  $(dirname ${AUTH_KEYS_FILE})
+                chmod 0700 $(dirname ${AUTH_KEYS_FILE})
+        fi
+        echo "${PUBKEY}" >> $AUTH_KEYS_FILE
+        chmod 0600 ${AUTH_KEYS_FILE}
+fi
+
+# Fetch the root's auth keys so we can put them in the user's authkeys file
+AUTH_KEYS=`cat ${AUTH_KEYS_FILE}`
 
 
 # Collect info from user
@@ -348,6 +372,12 @@ service nginx reload
 # installation/configuration by system user
 
 su $USER_NAME <<EOSYSUSRCMDS
+
+mkdir -p /home/${USER_NAME}/.ssh
+chmod 0700 /home/${USER_NAME}/.ssh
+echo "${AUTH_KEYS}" >> /home/${USER_NAME}/.ssh/authorized_keys
+chmod 0600 /home/${USER_NAME}/.ssh/authorized_keys
+
 mkdir -p $WEBROOT
 cd $WEBROOT
 
@@ -398,6 +428,7 @@ EOSYSUSRCMDS
 echo
 
 echo "URL: $WP_URL"
+echo "WEBROOT: $WEBROOT"
 
 echo "USER_NAME: $USER_NAME"
 echo "USER_PASS: $USER_PASS"
