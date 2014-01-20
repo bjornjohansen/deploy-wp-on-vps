@@ -396,24 +396,27 @@ wp core install --url=${WP_URL} --title=${WP_SITENAME} --admin_user=${WP_USER} -
 wp option update blogdescription "${WP_SITEDESCRIPTION}"
 echo "y" | wp site empty
 wp plugin uninstall hello
-wp plugin install wp-db-driver --activate
 wp plugin install advanced-custom-fields --activate
 wp plugin install aryo-activity-log --activate
+wp plugin install bj-lazy-load --activate
+wp plugin install enforce-strong-password --activate
 wp plugin install ewww-image-optimizer --activate
 wp plugin install google-analytics-for-wordpress --activate
-wp plugin install ninja-forms --activate
-wp plugin install relevanssi --activate
-wp plugin install simple-page-ordering --activate
-wp plugin install tablepress --activate
-wp plugin install wordpress-seo --activate
-wp plugin install wp-crontrol --activate
-wp plugin install wp-cron-control --activate
-wp plugin install https://github.com/kasparsd/minit/archive/master.zip --activate
-wp plugin install https://github.com/bjornjohansen/minit-yui/archive/master.zip --activate
-wp plugin install enforce-strong-password --activate
 wp plugin install google-authenticator --activate
 wp plugin install google-authenticator-encourage-user-activation --activate
 wp plugin install google-authenticator-per-user-prompt --activate
+wp plugin install ninja-forms --activate
+wp plugin install relevanssi --activate
+wp plugin install regenerate-thumbnails --activate
+wp plugin install simple-page-ordering --activate
+wp plugin install tablepress --activate
+wp plugin install wordpress-seo --activate
+wp plugin install wp-cron-control --activate
+wp plugin install wp-crontrol --activate
+wp plugin install wp-db-driver --activate
+wp plugin install wp-pagenavi --activate
+wp plugin install https://github.com/kasparsd/minit/archive/master.zip --activate
+wp plugin install https://github.com/bjornjohansen/minit-yui/archive/master.zip --activate
 
 
 # Set up cron
